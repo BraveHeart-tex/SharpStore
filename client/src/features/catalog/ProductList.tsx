@@ -10,8 +10,8 @@ export default function ProductList({ products }: IProps) {
   return (
     <Grid container spacing={4}>
       {products.map((product) => (
-        <Grid item xs={4}>
-          <ProductCard key={product.id} product={product} />
+        <Grid item xs={3} key={product.id}>
+          <ProductCard product={product} />
         </Grid>
       ))}
     </Grid>
