@@ -5,8 +5,13 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { useState } from 'react';
-import Catalog from '../../features/catalog/Catalog';
 import Header from './Header';
+import Catalog from '../../features/catalog/Catalog';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from '../../features/home/HomePage';
+import AboutPage from '../../features/about/AboutPage';
+import ProductDetails from '../../features/catalog/ProductDetails';
+import ContactPage from '../../features/contact/ContactPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -24,7 +29,13 @@ function App() {
       <CssBaseline />
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <Container>
-        <Catalog />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/catalog' element={<Catalog />} />
+          <Route path='/about' element={<AboutPage />} />
+          <Route path='/:id' element={<ProductDetails />} />
+          <Route path='/contact' element={<ContactPage />} />
+        </Routes>
       </Container>
     </ThemeProvider>
   );
