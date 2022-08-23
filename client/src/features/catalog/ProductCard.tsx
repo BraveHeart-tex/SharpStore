@@ -49,7 +49,7 @@ export default function ProductCard({ product }: IProps) {
       </CardContent>
       <CardActions>
         <Button size='small'>Add to Cart</Button>
-        <Button component={Link} to={`/${product.id}`} size='small'>
+        <Button component={Link} to={`/catalog/${product.id}`} size='small'>
           View
         </Button>
       </CardActions>
