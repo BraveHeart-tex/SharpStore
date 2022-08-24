@@ -10,7 +10,8 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { useStoreContext } from '../context/StoreContext';
 
 interface IProps {
   darkMode: boolean;
@@ -37,6 +38,11 @@ const navStyles = {
 };
 
 export default function Header({ darkMode, setDarkMode }: IProps) {
+  const { basket } = useStoreContext();
+  const basketCount = basket?.items.reduce(
+    (count, item) => count + item.quantity,
+    0
+  );
   return (
     <AppBar position='static' sx={{ mb: 4, width: '100%' }}>
       <Toolbar
@@ -66,8 +72,13 @@ export default function Header({ darkMode, setDarkMode }: IProps) {
 
         <Box display='flex' alignItems='center'>
           {/* element 3 start */}
-          <IconButton size='large' sx={{ color: 'inherit' }}>
-            <Badge badgeContent={4} color='secondary'>
+          <IconButton
+            component={Link}
+            to='/basket'
+            size='large'
+            sx={{ color: 'inherit' }}
+          >
+            <Badge badgeContent={basketCount} color='secondary'>
               <ShoppingCart />
             </Badge>
           </IconButton>

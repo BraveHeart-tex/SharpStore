@@ -2,6 +2,7 @@ using API.Data;
 using API.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,13 +46,13 @@ namespace API
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
       }
 
-      app.UseHttpsRedirection();
+      // app.UseHttpsRedirection();
 
       app.UseRouting();
 
       app.UseCors(opt =>
       {
-        opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+        opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
       });
 
       app.UseAuthorization();
