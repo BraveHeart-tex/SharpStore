@@ -3,26 +3,28 @@ import {
   createTheme,
   CssBaseline,
   ThemeProvider,
-} from '@mui/material';
-import { useEffect, useState } from 'react';
-import Header from './Header';
-import Catalog from '../../features/catalog/Catalog';
-import { Route, Routes } from 'react-router-dom';
-import HomePage from '../../features/home/HomePage';
-import AboutPage from '../../features/about/AboutPage';
-import ProductDetails from '../../features/catalog/ProductDetails';
-import ContactPage from '../../features/contact/ContactPage';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ServerError from '../errors/ServerError';
-import NotFound from '../errors/NotFound';
-import BasketPage from '../../features/basket/BasketPage';
-import { getCookie } from '../util/util';
-import agent from '../api/agent';
-import LoadingComponent from './LoadingComponent';
-import CheckoutPage from '../../features/checkout/CheckoutPage';
-import { useAppDispatch } from '../store/configureStore';
-import { setBasket } from '../../features/basket/basketSlice';
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import Header from "./Header";
+import Catalog from "../../features/catalog/Catalog";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "../../features/home/HomePage";
+import AboutPage from "../../features/about/AboutPage";
+import ProductDetails from "../../features/catalog/ProductDetails";
+import ContactPage from "../../features/contact/ContactPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ServerError from "../errors/ServerError";
+import NotFound from "../errors/NotFound";
+import BasketPage from "../../features/basket/BasketPage";
+import { getCookie } from "../util/util";
+import agent from "../api/agent";
+import LoadingComponent from "./LoadingComponent";
+import CheckoutPage from "../../features/checkout/CheckoutPage";
+import { useAppDispatch } from "../store/configureStore";
+import { setBasket } from "../../features/basket/basketSlice";
+import Login from "../../features/account/Login";
+import Register from "../../features/account/Register";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -30,7 +32,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const buyerId = getCookie('buyerId');
+    const buyerId = getCookie("buyerId");
     if (buyerId) {
       agent.Basket.get()
         .then((basket) => dispatch(setBasket(basket)))
@@ -41,33 +43,35 @@ function App() {
     }
   }, [dispatch]);
 
-  const paletteType = darkMode ? 'dark' : 'light';
+  const paletteType = darkMode ? "dark" : "light";
   const theme = createTheme({
     palette: {
       mode: paletteType,
       background: {
-        default: paletteType === 'light' ? '#eaeaea' : '#121212',
+        default: paletteType === "light" ? "#eaeaea" : "#121212",
       },
     },
   });
 
-  if (loading) return <LoadingComponent message='Initializing app...' />;
+  if (loading) return <LoadingComponent message="Initializing app..." />;
   return (
     <ThemeProvider theme={theme}>
-      <ToastContainer theme='colored' position='bottom-right' hideProgressBar />
+      <ToastContainer theme="colored" position="bottom-right" hideProgressBar />
       <CssBaseline />
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <Container>
         <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/catalog' element={<Catalog />} />
-          <Route path='/about' element={<AboutPage />} />
-          <Route path='/catalog/:id' element={<ProductDetails />} />
-          <Route path='/contact' element={<ContactPage />} />
-          <Route path='/server-error' element={<ServerError />} />
-          <Route path='*' element={<NotFound />} />
-          <Route path='/basket' element={<BasketPage />} />
-          <Route path='/checkout' element={<CheckoutPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/catalog/:id" element={<ProductDetails />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/server-error" element={<ServerError />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/basket" element={<BasketPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Container>
     </ThemeProvider>

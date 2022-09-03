@@ -1,19 +1,29 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { toast } from 'react-toastify';
-import { history } from '../..';
-import { PaginatedResponse } from '../models/pagination';
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
+import { history } from "../..";
+import { PaginatedResponse } from "../models/pagination";
+import { store } from "../store/configureStore";
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
-axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.baseURL = "http://localhost:5000/api/";
 axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
+axios.interceptors.request.use((config) => {
+  const token = store.getState().account.user?.token;
+  if (token) {
+    // @ts-ignore
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 axios.interceptors.response.use(
   async (response) => {
     await sleep();
-    const pagination = response.headers['pagination'];
+    const pagination = response.headers["pagination"];
     if (pagination) {
       response.data = new PaginatedResponse(
         response.data,
@@ -45,7 +55,7 @@ axios.interceptors.response.use(
         toast.error(data.title);
         break;
       case 500:
-        history.push('/server-error', { error: data });
+        history.push("/server-error", { error: data });
         toast.error(data.title);
         break;
       default:
@@ -64,31 +74,38 @@ const requests = {
 };
 
 const Catalog = {
-  list: (params: URLSearchParams) => requests.get('products', params),
+  list: (params: URLSearchParams) => requests.get("products", params),
   details: (id: number) => requests.get(`products/${id}`),
-  fetchFilters: () => requests.get('products/filters'),
+  fetchFilters: () => requests.get("products/filters"),
 };
 
 const TestErrors = {
-  get400Error: () => requests.get('buggy/bad-request'),
-  get401Error: () => requests.get('buggy/unauthorized'),
-  get404Error: () => requests.get('buggy/not-found'),
-  get500Error: () => requests.get('buggy/server-error'),
-  getValidationError: () => requests.get('buggy/validation-error'),
+  get400Error: () => requests.get("buggy/bad-request"),
+  get401Error: () => requests.get("buggy/unauthorized"),
+  get404Error: () => requests.get("buggy/not-found"),
+  get500Error: () => requests.get("buggy/server-error"),
+  getValidationError: () => requests.get("buggy/validation-error"),
 };
 
 const Basket = {
-  get: () => requests.get('basket'),
+  get: () => requests.get("basket"),
   addItem: (productId: number, quantity = 1) =>
     requests.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
   removeItem: (productId: number, quantity = 1) =>
     requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
 };
 
+const Account = {
+  login: (values: any) => requests.post("account/login", values),
+  register: (values: any) => requests.post("account/register", values),
+  currentUser: () => requests.get("account/currentUser"),
+};
+
 const agent = {
   Catalog,
   TestErrors,
   Basket,
+  Account,
 };
 
 export default agent;
