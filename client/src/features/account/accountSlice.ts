@@ -1,9 +1,10 @@
-import { User } from "../../app/models/user";
-import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { FieldValues } from "react-hook-form";
-import agent from "../../app/api/agent";
-import { history } from "../../index";
-import { toast } from "react-toastify";
+import { User } from '../../app/models/user';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { FieldValues } from 'react-hook-form';
+import agent from '../../app/api/agent';
+import { history } from '../../index';
+import { toast } from 'react-toastify';
+import { setBasket } from '../basket/basketSlice';
 
 interface AccountState {
   user: User | null;
@@ -14,11 +15,13 @@ const initialState: AccountState = {
 };
 
 export const signInUser = createAsyncThunk<User, FieldValues>(
-  "account/signInUser",
+  'account/signInUser',
   async (data, thunkAPI) => {
     try {
-      const user = await agent.Account.login(data);
-      localStorage.setItem("user", JSON.stringify(user));
+      const userDto = await agent.Account.login(data);
+      const { basket, ...user } = userDto;
+      if (basket) thunkAPI.dispatch(setBasket(basket));
+      localStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (error: any) {
       thunkAPI.rejectWithValue({ error: error.data });
@@ -27,12 +30,14 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
 );
 
 export const fetchCurrentUser = createAsyncThunk<User>(
-  "account/fetchCurrentUser",
+  'account/fetchCurrentUser',
   async (_, thunkAPI) => {
-    thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem("user")!)));
+    thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem('user')!)));
     try {
-      const user = await agent.Account.currentUser();
-      localStorage.setItem("user", JSON.stringify(user));
+      const userDto = await agent.Account.currentUser();
+      const { basket, ...user } = userDto;
+      if (basket) thunkAPI.dispatch(setBasket(basket));
+      localStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (error: any) {
       thunkAPI.rejectWithValue({ error: error.data });
@@ -40,19 +45,19 @@ export const fetchCurrentUser = createAsyncThunk<User>(
   },
   {
     condition: () => {
-      if (!localStorage.getItem("user")) return false;
+      if (!localStorage.getItem('user')) return false;
     },
   }
 );
 
 export const accountSlice = createSlice({
-  name: "account",
+  name: 'account',
   initialState,
   reducers: {
     signOut: (state) => {
       state.user = null;
-      localStorage.removeItem("user");
-      history.push("/");
+      localStorage.removeItem('user');
+      history.push('/');
     },
     setUser: (state, action) => {
       state.user = action.payload;
@@ -61,9 +66,9 @@ export const accountSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCurrentUser.rejected, (state) => {
       state.user = null;
-      localStorage.removeItem("user");
-      toast.error("Session expired - please log in again.");
-      history.push("/");
+      localStorage.removeItem('user');
+      toast.error('Session expired - please log in again.');
+      history.push('/');
     });
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
@@ -72,7 +77,7 @@ export const accountSlice = createSlice({
       }
     );
     builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {
-      console.log(action.payload);
+      throw action.payload;
     });
   },
 });
