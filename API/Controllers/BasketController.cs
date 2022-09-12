@@ -26,7 +26,7 @@ namespace API.Controllers
       var basket = await RetrieveBasket(GetBuyerId());
 
       if (basket == null) return NotFound();
-      
+
       return basket.MapBasketToDto();
     }
 
@@ -87,8 +87,8 @@ namespace API.Controllers
         Response.Cookies.Delete("buyerId");
         return null;
       }
-      
-      
+
+
       return await _context.Baskets
           .Include(i => i.Items)
           .ThenInclude(p => p.Product)
@@ -99,7 +99,7 @@ namespace API.Controllers
     {
       return User.Identity?.Name ?? Request.Cookies["buyerId"];
     }
-    
+
     private Basket CreateBasket()
     {
       var buyerId = User.Identity?.Name;
