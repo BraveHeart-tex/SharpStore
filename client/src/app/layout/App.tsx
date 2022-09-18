@@ -18,7 +18,6 @@ import ServerError from '../errors/ServerError';
 import NotFound from '../errors/NotFound';
 import BasketPage from '../../features/basket/BasketPage';
 import LoadingComponent from './LoadingComponent';
-import CheckoutPage from '../../features/checkout/CheckoutPage';
 import { useAppDispatch } from '../store/configureStore';
 import { fetchBasketAsync } from '../../features/basket/basketSlice';
 import Login from '../../features/account/Login';
@@ -26,6 +25,7 @@ import Register from '../../features/account/Register';
 import { fetchCurrentUser } from '../../features/account/accountSlice';
 import PrivateRoute from './PrivateRoute';
 import OrderComponent from '../../features/orders/OrderComponent';
+import CheckoutWrapper from '../../features/checkout/CheckoutWrapper';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -74,7 +74,7 @@ function App() {
             path='/checkout'
             element={
               <PrivateRoute>
-                <CheckoutPage />
+                <CheckoutWrapper />
               </PrivateRoute>
             }
           />

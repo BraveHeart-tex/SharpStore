@@ -43,7 +43,7 @@ export default function OrderComponent() {
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell>Order Number</TableCell>
+            <TableCell>Order number</TableCell>
             <TableCell align='right'>Total</TableCell>
             <TableCell align='right'>Order Date</TableCell>
             <TableCell align='right'>Order Status</TableCell>
@@ -65,7 +65,9 @@ export default function OrderComponent() {
               </TableCell>
               <TableCell align='right'>{order.orderStatus}</TableCell>
               <TableCell align='right'>
-                <Button>View</Button>
+                <Button onClick={() => setSelectedOrderNumber(order.id)}>
+                  View
+                </Button>
               </TableCell>
             </TableRow>
           ))}
