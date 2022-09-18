@@ -25,6 +25,7 @@ import Login from '../../features/account/Login';
 import Register from '../../features/account/Register';
 import { fetchCurrentUser } from '../../features/account/accountSlice';
 import PrivateRoute from './PrivateRoute';
+import OrderComponent from '../../features/orders/OrderComponent';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -78,6 +79,14 @@ function App() {
             }
           />
           <Route path='/basket' element={<BasketPage />} />
+          <Route
+            path='/orders'
+            element={
+              <PrivateRoute>
+                <OrderComponent />
+              </PrivateRoute>
+            }
+          />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>

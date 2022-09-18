@@ -68,15 +68,15 @@ namespace API.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     BuyerId = table.Column<string>(type: "TEXT", nullable: true),
-                    ShippingAddres_FullName = table.Column<string>(type: "TEXT", nullable: true),
-                    ShippingAddres_Adress1 = table.Column<string>(type: "TEXT", nullable: true),
-                    ShippingAddres_Adress2 = table.Column<string>(type: "TEXT", nullable: true),
-                    ShippingAddres_City = table.Column<string>(type: "TEXT", nullable: true),
-                    ShippingAddres_State = table.Column<string>(type: "TEXT", nullable: true),
-                    ShippingAddres_Zip = table.Column<string>(type: "TEXT", nullable: true),
-                    ShippingAddres_Country = table.Column<string>(type: "TEXT", nullable: true),
+                    ShippingAddress_FullName = table.Column<string>(type: "TEXT", nullable: true),
+                    ShippingAddress_Address1 = table.Column<string>(type: "TEXT", nullable: true),
+                    ShippingAddress_Address2 = table.Column<string>(type: "TEXT", nullable: true),
+                    ShippingAddress_City = table.Column<string>(type: "TEXT", nullable: true),
+                    ShippingAddress_State = table.Column<string>(type: "TEXT", nullable: true),
+                    ShippingAddress_Zip = table.Column<string>(type: "TEXT", nullable: true),
+                    ShippingAddress_Country = table.Column<string>(type: "TEXT", nullable: true),
                     OrderDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    SubTotal = table.Column<long>(type: "INTEGER", nullable: false),
+                    Subtotal = table.Column<long>(type: "INTEGER", nullable: false),
                     DeliveryFee = table.Column<long>(type: "INTEGER", nullable: false),
                     OrderStatus = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -216,8 +216,8 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false),
                     FullName = table.Column<string>(type: "TEXT", nullable: true),
-                    Adress1 = table.Column<string>(type: "TEXT", nullable: true),
-                    Adress2 = table.Column<string>(type: "TEXT", nullable: true),
+                    Address1 = table.Column<string>(type: "TEXT", nullable: true),
+                    Address2 = table.Column<string>(type: "TEXT", nullable: true),
                     City = table.Column<string>(type: "TEXT", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: true),
                     Zip = table.Column<string>(type: "TEXT", nullable: true),
@@ -288,12 +288,12 @@ namespace API.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 1, "2d7bc9c4-25ed-442e-810a-eb76dfe9b2bf", "Member", "MEMBER" });
+                values: new object[] { 1, "ff59d679-ae43-49e2-aabc-953b968f414d", "Member", "MEMBER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 2, "589521b4-0074-4694-9fa7-68fa098d2fac", "Admin", "ADMIN" });
+                values: new object[] { 2, "c35d3f99-3a90-4146-8116-b07ae21fc111", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

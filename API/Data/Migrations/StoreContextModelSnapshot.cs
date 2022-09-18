@@ -72,7 +72,7 @@ namespace API.Data.Migrations
                     b.Property<int>("OrderStatus")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("SubTotal")
+                    b.Property<long>("Subtotal")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -164,14 +164,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "2d7bc9c4-25ed-442e-810a-eb76dfe9b2bf",
+                            ConcurrencyStamp = "ff59d679-ae43-49e2-aabc-953b968f414d",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "589521b4-0074-4694-9fa7-68fa098d2fac",
+                            ConcurrencyStamp = "c35d3f99-3a90-4146-8116-b07ae21fc111",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -247,10 +247,10 @@ namespace API.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Adress1")
+                    b.Property<string>("Address1")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Adress2")
+                    b.Property<string>("Address2")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("City")
@@ -393,15 +393,15 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
                 {
-                    b.OwnsOne("API.Entities.OrderAggregate.ShippingAddres", "ShippingAddres", b1 =>
+                    b.OwnsOne("API.Entities.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<string>("Adress1")
+                            b1.Property<string>("Address1")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<string>("Adress2")
+                            b1.Property<string>("Address2")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("City")
@@ -427,7 +427,7 @@ namespace API.Data.Migrations
                                 .HasForeignKey("OrderId");
                         });
 
-                    b.Navigation("ShippingAddres");
+                    b.Navigation("ShippingAddress");
                 });
 
             modelBuilder.Entity("API.Entities.OrderAggregate.OrderItem", b =>
