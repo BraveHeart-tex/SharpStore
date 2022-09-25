@@ -9,6 +9,13 @@ interface IProps {
 
 function AppPagination({ metaData, onPageChange }: IProps) {
   const { currentPage, totalCount, totalPages, pageSize } = metaData;
+  const [pageNumber, setPageNumber] = React.useState(currentPage);
+
+  function handlePageChange(page: number) {
+    setPageNumber(page);
+    onPageChange(page);
+  }
+
   return (
     <Box display='flex' justifyContent='space-between' alignItems='center'>
       <Typography>
@@ -22,8 +29,8 @@ function AppPagination({ metaData, onPageChange }: IProps) {
         color='primary'
         size='large'
         count={totalPages}
-        page={currentPage}
-        onChange={(e, page) => onPageChange(page)}
+        page={pageNumber}
+        onChange={(e, page) => handlePageChange(page)}
       />
     </Box>
   );
