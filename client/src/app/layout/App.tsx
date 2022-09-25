@@ -26,6 +26,7 @@ import PrivateRoute from './PrivateRoute';
 import OrderComponent from '../../features/orders/OrderComponent';
 import CheckoutWrapper from '../../features/checkout/CheckoutWrapper';
 import Inventory from '../../features/admin/Inventory';
+import PrivateInventoryRoute from './PrivateInventoryRoute';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -89,9 +90,9 @@ function App() {
           <Route
             path='/inventory'
             element={
-              <PrivateRoute>
+              <PrivateInventoryRoute>
                 <Inventory />
-              </PrivateRoute>
+              </PrivateInventoryRoute>
             }
           />
           <Route path='/login' element={<Login />} />
