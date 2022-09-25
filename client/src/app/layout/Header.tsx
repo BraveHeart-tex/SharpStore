@@ -74,6 +74,11 @@ export default function Header({ darkMode, setDarkMode }: IProps) {
               {title.toUpperCase()}
             </ListItem>
           ))}
+          {user && (
+            <ListItem component={NavLink} to='/inventory' sx={navStyles}>
+              Inventory
+            </ListItem>
+          )}
         </List>
         {/* element 2 end */}
 
