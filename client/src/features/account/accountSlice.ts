@@ -5,6 +5,7 @@ import agent from '../../app/api/agent';
 import { history } from '../../index';
 import { toast } from 'react-toastify';
 import { setBasket } from '../basket/basketSlice';
+import jwtDecode from 'jwt-decode';
 
 interface AccountState {
   user: User | null;
@@ -60,7 +61,7 @@ export const accountSlice = createSlice({
       history.push('/');
     },
     setUser: (state, action) => {
-      let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
+      let claims = JSON.parse(jwtDecode(action.payload.token.split('.')[1]));
       let roles =
         claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       state.user = {
@@ -79,7 +80,7 @@ export const accountSlice = createSlice({
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
       (state, action) => {
-        let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
+        let claims = JSON.parse(jwtDecode(action.payload.token.split('.')[1]));
         let roles =
           claims[
             'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
